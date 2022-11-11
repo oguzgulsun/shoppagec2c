@@ -395,7 +395,7 @@ export default {
       // let formData = new FormData();
       // formData.append('image', this.image);
       axios
-        .post("/datafromapi/uploadavatar", {
+        .post("/api/uploadavatar", {
           image: this.image,
         })
         .then((response) => {

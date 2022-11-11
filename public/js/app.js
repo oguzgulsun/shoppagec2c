@@ -868,7 +868,7 @@ __webpack_require__.r(__webpack_exports__);
 
       // let formData = new FormData();
       // formData.append('image', this.image);
-      axios.post("/datafromapi/uploadavatar", {
+      axios.post("/api/uploadavatar", {
         image: this.image
       }).then(function (response) {
         _this3.user.avatar = response.data;
