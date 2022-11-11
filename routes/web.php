@@ -37,8 +37,8 @@ Route::get('/reset-password', [App\Http\Controllers\AuthController::class, 'rese
 Route::prefix('/api')->middleware(['verified'])->group(function () {
     Route::post('/uploadsinglefile', [App\Http\Controllers\FileController::class, 'uploadsinglefile']);
     Route::post('/changeuserpassword', [App\Http\Controllers\ProfileController::class, 'changeuserpassword']);
-   
-    
+    Route::post('/uploadavatar', [App\Http\Controllers\ProfileController::class, 'uploadavatar']);
+    Route::post('/getaccountactivities', [App\Http\Controllers\ProfileController::class, 'getaccountactivities']);
 });
 
 // Route::get('/reset-password', function () {return view('auth.reset-password');})->name('password.reset');
