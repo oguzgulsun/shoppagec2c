@@ -36,7 +36,7 @@ class ProfileController extends Controller
     }
 
     public function changeuserpassword(Request $request){
-        //deneme
+        //deneme amk seyi
         $authuser = Auth::user();
         $user = DB::table('users')->where('id',$authuser->id)->get();
         $currenthashedpassword = $user[0]->password;
