@@ -1,11 +1,13 @@
 <template>
    <v-app>
+    <notifications group="standard" classes="ntfctn_standard" position="top right"/>
       <v-navigation-drawer
-      absolute
+        absolute
         permanent
         expand-on-hover
+        width="200px"
       >
-      <Sidebar :routes="routes" />
+      <Sidebar />
       </v-navigation-drawer>
       <v-app-bar app color="#dedede">
         <v-spacer></v-spacer>
@@ -31,16 +33,51 @@ export default {
   data() {
     return {
       drawer: false,
-      msg: 'Hello world!',
-      routes:[]
     }
-  },
+  }, 
+   computed: {
+    routes: {
+      get() {
+        return this.$store.state.routes;
+      },
+      set(value) {
+        this.$store.commit("SET_ROUTES", value);
+      },
+    },
+    },
   components:{Sidebar,Appbar},
 }
 </script>
 
 <style>
-.example {
-  color: red;
+.ntfctn_standard {
+ margin: 0 5px 5px;
+  padding: 5px;
+  font-size: 15px;
+  color: rgb(71, 71, 71);
+  background-color: #fff;
+  border-left: 10px solid green;
+}
+.ntfctn_standard .notification-title{
+    line-height: 1.4;
+    display: block;
+    font-size: 17px;
+    padding:10px 15px 5px 15px;
+}
+ .ntfctn_standard .notification-content {
+   display: block;
+   padding: 10px 15px;
+}
+.ntfctn_standard.success{
+  background-color: honeydew;
+  border-left: 10px solid green;  
+}
+.ntfctn_standard.warning{
+  background-color: cornsilk;
+  border-left: 10px solid orange;
+}
+.ntfctn_standard.error{
+  background-color: seashell;
+   border-left: 10px solid red;
 }
 </style>

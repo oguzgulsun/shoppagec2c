@@ -1,0 +1,251 @@
+$tablet-width: 768px;
+$desktop-width: 1024px;
+$desktop-midwidth: 1440px;
+$desktop-largewidth: 1700px;
+@mixin mobil {
+  @media (max-width: #{$tablet-width}) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: #{$tablet-width}) and (max-width: #{$desktop-width - 1px}) {
+    @content;
+  }
+}
+
+@mixin desktop_s {
+  @media (min-width: #{$desktop-width}) and (max-width: #{$desktop-midwidth - 1px}) {
+    @content;
+  }
+}
+
+@mixin desktop_m {
+  @media (min-width: #{$desktop-midwidth}) and (max-width: #{$desktop-largewidth - 1px}) {
+    @content;
+  }
+}
+
+@mixin desktop_l {
+  @media (min-width: #{$desktop-largewidth}) {
+    @content;
+  }
+}
+
+.page-enter-active {
+	transition: all .8s ease;
+}
+
+.page-leave-active {
+	transition: all .13s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+
+.page-enter, .page-leave-to {
+	transform: translateX(10px);
+	opacity: 0;
+}
+
+
+.line{
+    width: 100%;
+    height: 2px;
+    background-color: #48bbcd;
+    position: relative;
+    margin-bottom: 50px;
+}
+.line_grey{
+    width: 100%;
+    height: 1px;
+    background-color: #205158;
+    position: relative;
+    margin:50px 0; 
+}
+.homepage_market_example{
+    padding: 10px;
+    h6{
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+    p{
+        margin-bottom: 15px;
+    }
+}
+
+.loginorregister{
+    h2{
+        display: block;
+        text-align: center;
+        margin: 0 0 10px 0;
+    }
+    span{
+        display: block;
+        text-align: center;
+    }
+    a{
+        display: block;
+        text-align: center;
+        margin: 10px 0 10px 0;
+    }
+    .line{
+        width: 100%;
+        height: 2px;
+        background-color: #205158;
+        position: relative;
+        margin-bottom: 50px;
+        margin-top: 34px;
+    }
+}
+.guest_header{
+    #sec1{
+        position:relative;
+        margin: 0;
+        padding: 0;
+        background: url('https://images.unsplash.com/photo-1509071143367-df917c9252a1?ixlib=rb-0.3.5&q=85&fm=jpg&crop=entropy&cs=srgb&ixid=eyJhcHBfaWQiOjE0NTg5fQ&s=b969767186537878bf261c11f197a6bd');
+        background-size:cover;
+        background-position:center;
+        background-repeat:no-repeat;
+        width:100%;
+        height:300px;
+        overflow:hidden;
+      }
+      img {
+        position:absolute;
+        bottom:0;
+        width:100%;  
+        height:auto;
+        
+      /*   this will make it responsive */
+      path{
+        fill:#fff;
+      }
+      }
+       
+}
+
+.frontend_area{
+    background-color: #3b5b87;
+    padding: 150px 0 100px 0;
+    height: 100vh;
+}
+
+
+
+$slides: 7;
+$slide-width: 140px;
+$slide-height: 97px;
+$ang: 360 / $slides;
+$perspective: 700px;
+$bg: #fff;
+$shadow: rgba(255, 255, 255, 0.477);
+$spin-time: 20s;
+
+$y: ();
+@for $i from 0 through $slides {
+    $y: append($y, $i*$ang + deg);
+}
+
+@mixin animation($name) {
+    @-webkit-keyframes #{$name} {@content;}
+    @-moz-keyframes #{$name} {@content;}
+    @-o-keyframes #{$name} {@content;}
+    @keyframes #{$name} {@content;}
+}
+
+@mixin animation-use($name, $time) {
+    -webkit-animation: $name $time infinite linear;
+    -moz-animation: $name $time infinite linear;
+    -o-animation: $name $time infinite linear;
+    animation: $name $time infinite linear;
+}
+
+@mixin slidePos($y, $z) {
+    -webkit-transform: rotateY($y) translateZ($z);
+    -ms-transform: rotateY($y) translateZ($z);
+    transform: rotateY($y) translateZ($z);
+}
+
+@mixin rotate($x, $y) {
+    -webkit-transform: rotateX($x) rotateY($y);
+    -ms-transform: rotateX($x) rotateY($y);
+    transform: rotateX($x) rotateY($y);
+}
+
+@include animation(turn) {
+    50% {
+        @include rotate(5deg, .5turn);
+    }
+    100% {
+        @include rotate(-5deg, 1turn);
+    }
+}
+
+.donenbody {
+    margin: 0;
+    overflow: hidden;
+    background: $bg;
+    position: relative;
+    @include mobil() {
+        height: 250px;
+    }
+    @include tablet() {
+        height: 450px;
+    }
+    @include desktop_s() {
+        height: 650px;
+    }
+    @include desktop_m() {
+        height: 850px;
+    }
+    @include desktop_l() {
+        height: 1050px;
+    }
+    .donencontainer {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        -webkit-perspective: $perspective;
+        -ms-perspective: $perspective;
+        perspective: $perspective; 
+        @include desktop_s(){
+            perspective: 450px;
+        }
+        @include desktop_m(){
+            perspective: 400px;
+        }
+        @include desktop_l(){
+            perspective: 350px;
+        }
+        .donencarousel {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: $slide-width;
+            height: $slide-height;
+            margin-left: -$slide-width/2;
+            margin-top: -$slide-height/2;
+            transform-style: preserve-3d;
+            @include rotate(-5deg, 0);
+            @include animation-use(turn, $spin-time);
+                        
+            .donenslide {
+                position: absolute;
+                width: $slide-width;
+                height: $slide-height;
+                border-radius: 8px;
+                box-shadow: 0 0 4px 1px $shadow;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+                
+                @for $i from 1 through $slides {
+                    &:nth-child(#{$i}) {
+                        @include slidePos(nth($y, $i), .2*$slides*$slide-width);
+                    }
+                }
+            }
+        }
+    }
+}
+

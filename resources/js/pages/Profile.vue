@@ -1,9 +1,6 @@
 <template>
   <div>
-    <v-card>
-      <v-breadcrumbs divider=">" large :items="items"></v-breadcrumbs>
-    </v-card>
-
+    <Breadcrumbs :breadcrumbs="breadcrumbs" />
     <v-container class="grey lighten-5">
       <v-row no-gutters>
         <v-col cols="12" sm="6">
@@ -247,10 +244,11 @@
 <script>
 import { CircleStencil, Cropper } from "vue-advanced-cropper";
 import "vue-advanced-cropper/dist/style.css";
+import Breadcrumbs from '../components/Breadcrumbs';
 export default {
   name: "Profile",
   components: {
-    Cropper,
+    Cropper,Breadcrumbs
   },
   data() {
     return {
@@ -259,7 +257,7 @@ export default {
         name: this.$i18n.t("name"),
         email: this.$i18n.t("email"),
       },
-      items: [
+      breadcrumbs: [
         {
           text: "Dashboard",
           disabled: false,

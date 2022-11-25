@@ -20,7 +20,7 @@ Route::controller(App\Http\Controllers\AuthController::class)->group(function(){
 });
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('homepage');
 });
 
 
@@ -39,9 +39,18 @@ Route::prefix('/api')->middleware(['verified'])->group(function () {
     Route::post('/changeuserpassword', [App\Http\Controllers\ProfileController::class, 'changeuserpassword']);
     Route::post('/uploadavatar', [App\Http\Controllers\ProfileController::class, 'uploadavatar']);
     Route::post('/getaccountactivities', [App\Http\Controllers\ProfileController::class, 'getaccountactivities']);
+    Route::post('/openmarket', [App\Http\Controllers\ShopController::class, 'openmarket']);
+    Route::post('/addproduct', [App\Http\Controllers\ProductController::class, 'add']);
+    Route::post('/getproducts', [App\Http\Controllers\ProductController::class, 'getall']);
+    Route::post('/getproduct', [App\Http\Controllers\ProductController::class, 'get']);
+
 });
 
 // Route::get('/reset-password', function () {return view('auth.reset-password');})->name('password.reset');
 // Route::get('/dashboard/profile',  [App\Http\Controllers\DashboardController::class, 'index'])->where('any','.*')->middleware('auth');
 
 Route::get('/dashboard/{any?}',  [App\Http\Controllers\DashboardController::class, 'index'])->where('any','.*')->middleware('verified');
+
+
+
+Route::get('{slug}', [App\Http\Controllers\MarketController::class, 'index'] );

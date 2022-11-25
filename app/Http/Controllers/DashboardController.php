@@ -9,6 +9,7 @@ class DashboardController extends Controller
 {
     public function index(){
         $user = auth()->user();
-        return view('app')->with('user',$user);
+        $market = $user->market;
+        return view('app')->with(['user'=>$user,'market'=>$market]);
     }
 }

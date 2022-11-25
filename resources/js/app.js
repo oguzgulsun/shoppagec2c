@@ -18,17 +18,51 @@ const i18n = new VueI18n({    locale: window.user!=null ? window.user.language:'
 
 import App from './pages/App';
 import Dashboard from './pages/Dashboard.vue';
-import Profile from './pages/Profile.vue';
-import NotificationsPage from './pages/Notifications.vue';
 import PageNotFound from './pages/PageNotFound.vue';
+
+var guestroutes = [
+    {path: '/' ,name: 'dashboard', component: Dashboard },
+    {path: '/profile',name: 'profile', component: () => import('./pages/Profile.vue') },
+    {path: '/notifications',name: 'notifications', component: () => import('./pages/Notifications.vue') },
+    {path: "*", name: 'PageNotFound' ,component: PageNotFound }
+];
+var authroutes = [
+    {path: '/' , component: Dashboard },
+    {path: '/profile', name: 'profile', component: () => import('./pages/Profile.vue') },
+    {path: '/products', name: 'products', component: () => import('./pages/Products.vue') },
+    
+    {path: '/new-product', name: 'newProduct', component: () => import('./pages/NewProduct.vue') },
+    {path: '/product/:hashid',name: 'productDetail', component: () => import('./pages/ProductDetail.vue') },
+    {path: '/notifications',name: 'notifications', component: () => import('./pages/Notifications.vue') },
+    {path: "*", name: 'PageNotFound' ,component: PageNotFound }
+];
+
+var routes = window.market==null?guestroutes:authroutes
+
+
+var storedroutes =[]
+routes.forEach(element => {
+    if(element.name!='PageNotFound'){
+        storedroutes.push({
+            name:element.name,
+            path:element.path
+        })
+    }
+});
 const store = new Vuex.Store({
     state: {
         user: window.user,
         notifications: [],
         account_activities: [],
-        market: null
+        market: window.market,
+        routes:storedroutes,
+        products:[],
+        services:[]
     },
     mutations: {
+        SET_ROUTES: (state, routes) => {
+            state.routes = routes;
+        },
         SET_MARKET: (state, market) => {
             state.market = market;
         },
@@ -49,19 +83,29 @@ const store = new Vuex.Store({
             let index = state.notifications.findIndex(item => item.id === notification.id)
             state.notification.splice(index, 1)
         },
-        
+        SET_PRODUCTS:(state, products) => {
+            state.products = products;
+        },
+        ADD_PRODUCT:(state, product) => {
+            state.products.unshift(product);
+        },
+        REMOVE_PRODUCT:(state, product) => {
+            let index = state.products.findIndex(item => item.id === product.id)
+            state.products.splice(index, 1)
+        },
+        UPDATE_PRODUCT:(state, product) => {
+            let index = state.products.findIndex(item => item.id === product.id)
+            state.products[index]=product
+        },
+
     }
 })
+
 
 const router = new VueRouter({
     mode: 'history',
     base: '/dashboard',
-    routes: [
-          {path: '/' , component: Dashboard },
-          {path: '/profile' , component: Profile },
-          {path: '/notifications' , component: NotificationsPage },
-        {path: "*", name: 'PageNotFound' ,component: PageNotFound }
-    ],
+    routes: routes
 });
 
 

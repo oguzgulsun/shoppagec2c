@@ -32,5 +32,6 @@
         </div>
     <script  src="{{ mix('js/app.js') }}" defer></script>
     <script> window.user = {!! json_encode($user) !!} ; </script>
+    <script> window.market = {!! json_encode($market) !!} ; </script>
 </body>
 </html>

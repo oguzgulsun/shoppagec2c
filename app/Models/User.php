@@ -26,6 +26,9 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     /**
+     * type 1 normal satıcı
+     * type 2 customer belki
+     * type 3 admin yani ben
      * The attributes that should be hidden for serialization.
      *
      * @var array<int, string>
@@ -43,4 +46,10 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function market()
+    {
+        return $this->hasOne(Market::class, 'user_id' );
+    }
+    
 }
